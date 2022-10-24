@@ -23,7 +23,7 @@ def find(pattern, path):
 
 def main():
     """runtime code"""
-    lookfor = input("What pattern am I looking for (Example: *.txt or *.cfg) ")
+    lookfor = input.lower("What pattern am I looking for (Example: *.txt or *.cfg) ")
     lookwhere = input("What is the path in which I should search? ")
     print("Results: ", find(lookfor, lookwhere)) # call function
 
