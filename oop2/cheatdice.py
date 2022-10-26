@@ -30,4 +30,19 @@ class Cheat_Loaded_Dice(Player): # inheritance of Player
           if self.dice[i] < 6:
               self.dice[i] += 1
           i += 1
+# switch other player's dice with dice that can't roll above a 3
+class Cheat_Saboteur(Player):
+  def cheat(self, other_player):
+    other_player.dice = [random.randint(1,3) for i in range(3)]
+                        # ^ this is a list comprehension;
+                        # a handy way to generate list contents
+                        # in one line of code
 
+# first die roll is lucky and can't roll under a 3
+class Cheat_Lucky_Die(Player):
+    def cheat(self): 
+        i = 0
+        while i < len(self.dice):
+            if self.dice[i] < 3:
+               self.dice[i]= randint(3,6)
+            i += 1
