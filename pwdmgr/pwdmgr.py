@@ -2,24 +2,17 @@
 
 """Alta3 | Python Basics | Final Project"""
 
-from cryptography.fernet import Fernet
 from random import choice, randint, shuffle
-
-
-"""Generate a key (once) for encrypting
-def write_key():
-    key = Fernet.generate_key()
-    with open("key.key", "wb") as key_file:
-        key_file.write(key)"""
-
-# key for encryption
+from cryptography.fernet import Fernet
 
 
 def load_key():
-    file = open("key.key", "rb")
-    key = file.read()
-    file.close()
-    return key
+
+    """ key for encryption """
+
+    with open("key.key", "rb") as file:
+        key = file.read()
+        return key
 
 
 key = load_key()
@@ -27,17 +20,22 @@ fer = Fernet(key)
 
 
 def view():
-    f = open("demofile.txt", "r")
-    for line in f.readlines():
-        data = line.rstrip()  # removes trailing characters
-        # splitting the data identified by |
-        website, email, passwd = data.split('|')
-        print("Website: ", website, "|Email: ", email, "| Password: ",
-              fer.decrypt(passwd.encode()).decode())
-    f.close()
+
+    """ function to view """
+
+    with open("demofile.txt", "r") as pwd_file:
+        for line in pwd_file.readlines():
+            data = line.rstrip()  # removes trailing characters
+            # splitting the data identified by |
+            website, email, passwd = data.split('|')
+            print("Website: ", website, "|Email: ", email, "| Password: ",
+                    fer.decrypt(passwd.encode()).decode())
 
 
 def add():
+
+    """ function to add """
+
     lowercase = [
         'a',
         'b',
@@ -112,19 +110,21 @@ def add():
     if len(website) == 0 or len(email) == 0:
         print("Please make sure not to leave any spaces empty.")
     else:
-        f = open("demofile.txt", "a")  # saving to the text file in append mode
-        f.write(
-            website +
-            '|' +
-            email +
-            '|' +
-            fer.encrypt(
-                password.encode()).decode() +
-            "\n")
-        f.close()
+        with open("demofile.txt", "a") as pwd_file: # saving to the text file in append mode
+            pwd_file.write(
+                    website +
+                    '|' +
+                    email +
+                    '|' +
+                    fer.encrypt(
+                        password.encode()).decode() +
+                    "\n")
 
 
 def main():
+
+    """ run the program in a loop """
+
     while True:
         mode = input(
             "Would to like to view or add passwords? (Enter view, add or quit)").lower()
